@@ -7,6 +7,7 @@ public class Test {
         Thread threadServeur = new Thread(() -> {
             try {
                 serveur.envoyerMessage();
+                serveur.recevoir();
             } catch (SocketException e) {
                 e.printStackTrace();
             }
@@ -15,15 +16,16 @@ public class Test {
 
         // Laisser un court délai pour que le serveur démarre
         try {
-            Thread.sleep(1000);
+            Thread.sleep(1000); // Attendre 1 seconde
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
         // Créer et connecter le client
         Client client = new Client();
-        client.envoyerUnMessage("amal qabani","hello");
-        ClientRecepteur clientRecepteur=new ClientRecepteur();
+        client.connecter("amani el aaly");
+        client.envoyerUnMessage("amal qabani", "hello");
+        ClientRecepteur clientRecepteur = new ClientRecepteur();
         clientRecepteur.recevoirMessage();
     }
 }

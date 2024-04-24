@@ -10,9 +10,6 @@ import java.sql.*;
 
 public class Serveur {
 
-
-
-
     public void envoyerMessage() throws SocketException {
 
         final int PORT = 10000;
@@ -34,21 +31,32 @@ public class Serveur {
 
             JSONObject message = new JSONObject(messageString);
 
-            String identificateur = message.getString("identificateur");
+
             String id = message.getString("id");
-            String contenu = message.getString("contenu");
+
             String ipAddress = packet.getAddress().getHostAddress();
             int port = packet.getPort();
 
             // Afficher les champs extraits
-            System.out.println("Identificateur: " + identificateur);
-            System.out.println("Contenu: " + contenu);
+
+
             System.out.println("Adresse IP du client: " + ipAddress);
             System.out.println("Port du client: " + port);
 
             // Insérer les données dans la base de données
-            if (id.equals("2")) {
-                connecter(identificateur, contenu);
+            switch (id) {
+                case "1":
+                    String identificateur = message.getString("identificateur");
+                    insererDansBaseDeDonnees(identificateur, ipAddress, port);
+                    break;
+                case "2":
+                    String identificateur1 = message.getString("identificateur");
+                    String contenu = message.getString("contenu");
+                    connecter(identificateur1, contenu);
+                    break;
+                default:
+                    System.out.println("ID non reconnu : " + id);
+                    break;
             }
 
         } catch (IOException | JSONException e) {
@@ -106,11 +114,7 @@ public class Serveur {
         DatagramSocket socket = new DatagramSocket(PORT);
 
         try {
-
-
             System.out.println("Serveur en attente de messages...");
-
-
 
             byte[] buffer = new byte[BUFFER_SIZE];
             DatagramPacket packet = new DatagramPacket(buffer, buffer.length);

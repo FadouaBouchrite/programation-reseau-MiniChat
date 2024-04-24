@@ -12,7 +12,7 @@ public class Client {
             // Créer un objet JSON avec l'identificateur seulement
             JSONObject message = new JSONObject();
             message.put("identificateur", nom);
-            message.put("id", "inscription");
+            message.put("id", "1");
 
             // Convertir le message JSON en tableau de bytes
             byte[] data = message.toString().getBytes();
