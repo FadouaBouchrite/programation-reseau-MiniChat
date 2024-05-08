@@ -14,16 +14,16 @@ public class ClientRecepteur {
             byte[] buffer = new byte[BUFFER_SIZE];
             DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
 
-            // Attente de réception du message
+
             System.out.println("En attente de réception du message...");
             socket.receive(packet);
 
-            // Traitement du message reçu
+
 
             String message = new String(packet.getData(), 0, packet.getLength(), StandardCharsets.UTF_8);
             System.out.println("Message reçu: " + message);
 
-            // Fermeture du socket
+
             socket.close();
         } catch (SocketException e) {
             e.printStackTrace();
